@@ -1,4 +1,5 @@
 import React from 'react';
+import { ListItemText } from '@material-ui/core';
 
 interface ContactListItemProps {
   firstname: string;
@@ -7,7 +8,7 @@ interface ContactListItemProps {
 
 class ContactListItem extends React.Component<ContactListItemProps>{
   render(){
-    return <p>Name: {this.props.firstname} {this.props.lastname}</p>
+    return <ListItemText>Name: {this.props.firstname} {this.props.lastname}</ListItemText>
   }
 }
 
