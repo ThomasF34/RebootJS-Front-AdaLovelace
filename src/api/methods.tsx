@@ -1,5 +1,6 @@
 import { User } from "../users/types";
 import axios from 'axios';
+import { IProfile } from "../profile/types";
 
 // fetch users via the server
 export function getUsers(): Promise<User[]> {
@@ -7,4 +8,15 @@ export function getUsers(): Promise<User[]> {
     .then(resp => {
       return resp.data
     })
+}
+
+export function login(email: string, password: string): Promise<IProfile>{
+  return axios
+    .post(
+      'http://localhost:3000/login',
+      {
+        username: email,
+        password: password
+      })
+    .then(resp => resp.data)
 }
