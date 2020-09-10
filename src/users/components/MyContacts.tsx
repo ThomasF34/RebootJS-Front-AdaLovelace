@@ -3,6 +3,7 @@ import ContactListItem from './ContactListItem';
 import { User } from '../types';
 import { getUsers } from '../../api/methods';
 import { List, ListItem, Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 interface ContactListState {
   users: User[];
@@ -27,7 +28,7 @@ class ContactList extends React.Component<{}, ContactListState>{
         {this.state.users.map((user) => <ListItem><ContactListItem firstname={user.firstname} lastname={user.lastname}/></ListItem>)}
       </List>
 
-      <Button color="primary">Chat</Button>
+      <Button color="primary"><Link to="/login">Se Connecter</Link></Button>
       </div>
   }
 }
