@@ -1,12 +1,15 @@
 import React from 'react';
 import { IFormField, defaultFormField } from '../../utils/types';
 import { TextField, Button, Container, Box, Grid } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { login } from '../../api/methods';
 import history from '../../history';
+import { validateRequiredField } from '../../utils/validateRequiredField';
 
 interface LoginFormState {
   email: IFormField,
-  password: IFormField
+  password: IFormField,
+  status: 'ready' | 'success' | 'error',
 }
 
 class LoginForm extends React.Component<{}, LoginFormState> {
@@ -14,44 +17,56 @@ class LoginForm extends React.Component<{}, LoginFormState> {
     super(props)
     this.state = {
       email: defaultFormField(),
-      password: defaultFormField()
+      password: defaultFormField(),
+      status: 'ready'
     }
     this.submit = this.submit.bind(this) // ou définir submit en arrow function : submit = () => {}
   }
 
   submit(){
     login(this.state.email.value, this.state.password.value)
-      .then((_profile) => history.push('/'));
+      .then((_profile) => {
+        history.push('/')
+        // this.setState({status: 'success'})
+      })
+      .catch(_error => { this.setState({status: 'error'})});
   }
 
   render(){
+    const { email, password, status } = this.state;
     return (
     <Container maxWidth='xs'>
+      {status !== 'ready' ?
+        <Alert severity={status}>
+          {status === 'success' ? 'Utilisateur connecté' : 'Utilisateur inexistant'}
+        </Alert> : null }
       <form onSubmit={(event) => { event.preventDefault(); this.submit() }}>
         <Box style={{ margin: '2rem 0'}}>
           <TextField
             label="Email"
-            value={this.state.email.value}
+            value={email.value}
             required={true}
             onChange={(event) => this.setState({
-              ...this.state,
-              email: {value: event.target.value, isValid: true}
+              email: {value: event.target.value, isValid: validateRequiredField(event.target.value)}
             })}
             fullWidth={true}
             style={{margin: '0.5rem 0'}}
             variant="outlined"
+
+            {...( email.isValid ? {} : { error: true, helperText: "Ce champ est obligatoire" })}
           />
           <TextField
             type="password"
             label="Password"
             required={true}
-            value={this.state.password.value}
+            value={password.value}
             onChange={(event) => this.setState({
-              ...this.state,
-              password: {value: event.target.value, isValid: true}
+              password: {value: event.target.value, isValid: validateRequiredField(event.target.value)}
             })}
             fullWidth={true}
             variant="outlined"
+
+            {...( password.isValid ? {} : { error: true, helperText: "Ce champ est obligatoire" })}
           />
         </Box>
         <Box style={{margin: '1rem 0'}}>
