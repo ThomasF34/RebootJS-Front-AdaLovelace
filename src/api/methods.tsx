@@ -17,6 +17,9 @@ export function login(email: string, password: string): Promise<IProfile>{
       {
         username: email,
         password: password
+      },
+      {
+        withCredentials: true
       })
     .then(resp => resp.data)
 }
