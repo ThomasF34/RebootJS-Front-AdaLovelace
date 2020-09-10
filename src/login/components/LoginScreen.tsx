@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tabs, Tab } from '@material-ui/core';
 import LoginTabPanel from './LoginTabPanel';
+import { Person, PersonAdd } from '@material-ui/icons';
 
 interface LoginScreenState {
   tab: number;
@@ -22,8 +23,8 @@ class LoginScreen extends React.Component<{}, LoginScreenState> {
           onChange={(_, newTab) => {
             this.setState({tab: newTab})
           }}>
-          <Tab label="login" />
-          <Tab label="register" />
+          <Tab icon={<Person />} label="login" />
+          <Tab icon={<PersonAdd />} label="register" />
         </Tabs>
         <LoginTabPanel valueTab={this.state.tab} index={0}>
           <h1> Salut </h1>
