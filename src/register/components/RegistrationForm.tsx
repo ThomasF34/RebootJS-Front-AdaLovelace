@@ -7,6 +7,8 @@ import { defaultFormField, defaultPasswordField, IProfileFormFields } from '../.
 import IdentitySection from './IdentitySection';
 import { validateRequiredField } from '../../utils/validateRequiredField';
 import CredentialsSection from './CredentialsSection';
+import ProfileFormCheck from './ProfileFormCheck';
+import { validateEmailField } from '../utils/validateEmailField';
 
 export interface IRegistrationFormState {
   status: 'ready' | 'success' | 'error';
@@ -38,12 +40,33 @@ class RegistrationForm extends React.Component<{}, IRegistrationFormState> {
 
   changeField = (field: 'email' | 'firstname' | 'lastname' | 'password' | 'confirmation'): ((value: string) => void) => {
     return (value: string) => {
-      this.setState({
+      const newState = {
         fields: {
           ...this.state.fields,
-          [field]: { value: value, isValid: validateRequiredField(value)}
+          [field]: { value: value }
         }
-      });
+      };
+
+      // checking fiels conditions
+      switch(field){
+        case 'email':
+          const { email } = newState.fields;
+          validateEmailField(email);
+          break;
+        case 'firstname':
+          const { firstname } = newState.fields;
+          //validateFirstnameField(email);
+          break;
+        case 'lastname':
+          const { lastname } = newState.fields;
+          //validateLastnameField(email);
+          break;
+        case 'password' || 'confirmation':
+          const { password, confirmation } = newState.fields;
+          //validatePasswordField(password, confirmation);
+          break;
+      }
+      this.setState(newState);
     }
   }
 
@@ -78,6 +101,7 @@ class RegistrationForm extends React.Component<{}, IRegistrationFormState> {
                   changePassword={this.changeField("password")}
                   changeConfirmation={this.changeField("confirmation")}
                 />
+                <ProfileFormCheck check={email.isValid} />
               </Grid>
             </Grid>
           </Box>

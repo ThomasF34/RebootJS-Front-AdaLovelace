@@ -1,6 +1,7 @@
 export interface IFormField{
   value: string;
   isValid: boolean;
+  error?: string;
 }
 
 export interface IProfileFormFields {
