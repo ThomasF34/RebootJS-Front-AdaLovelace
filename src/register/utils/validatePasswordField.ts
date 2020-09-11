@@ -1,6 +1,6 @@
 import { IFormPasswordField, IFormField } from "../../utils/types";
 
-export function validatePasswordField(password: IFormPasswordField, confirmation: IFormField){
+export function validatePasswordField(password: IFormPasswordField, confirmation: IFormField, isOptional?: boolean){
   confirmation.isValid = password.value === confirmation.value;
   if(!confirmation.isValid) { confirmation.error = 'La confirmation et le mot de passe ne sont pas identique'; }
   else { delete confirmation.error }
@@ -13,7 +13,7 @@ export function validatePasswordField(password: IFormPasswordField, confirmation
 
   const { hasLower, hasUpper, hasSymbol, hasNumber, hasValidLength } = password;
 
-  password.isValid = [hasLower, hasUpper, hasSymbol, hasNumber, hasValidLength].every(Boolean);
+  password.isValid = (isOptional && !password.value) || [hasLower, hasUpper, hasSymbol, hasNumber, hasValidLength].every(Boolean);
   if(!password.isValid) { password.error = 'Le mot de passe ne respecte pas une des règles de sécurité'}
   else { delete password.error }
 

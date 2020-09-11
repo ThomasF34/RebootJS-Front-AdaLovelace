@@ -4,6 +4,7 @@ import Forum from '@material-ui/icons/Forum';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import React, { Fragment } from 'react';
+import { ProfileButton } from './ProfileButton';
 
 export function AppMenu(){
   return (
@@ -23,7 +24,7 @@ export function AppMenu(){
           </Grid>
           <Grid item>
             <Toolbar>
-              <h1>Navigation</h1>
+              <ProfileButton />
             </Toolbar>
           </Grid>
         </Grid>
