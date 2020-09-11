@@ -23,7 +23,7 @@ class CredentialsSection extends React.Component<CredentialsSectionProps> {
           fullWidth={true}
           variant="outlined"
 
-          {...( password.isValid ? {} : { error: true, helperText: "Ce champ est obligatoire" })}
+          {...( password.isValid ? {} : { error: true, helperText: password.error })}
         />
         <TextField
           type="password"
@@ -36,7 +36,7 @@ class CredentialsSection extends React.Component<CredentialsSectionProps> {
           style={{margin: '0.5rem 0'}}
 
 
-          {...( confirmation.isValid ? {} : { error: true, helperText: "Ce champ est obligatoire" })}
+          {...( confirmation.isValid ? {} : { error: true, helperText: confirmation.error })}
         />
       </Fragment>
     )
