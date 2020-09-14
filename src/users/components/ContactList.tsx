@@ -25,7 +25,7 @@ class ContactList extends React.Component<{}, ContactListState>{
     return <div>
       <h1>Liste de contact</h1>
       <List>
-        {this.state.users.map((user) => <ListItem><ContactListItem firstname={user.firstname} lastname={user.lastname}/></ListItem>)}
+        {this.state.users.map((user, index) => <ListItem key={index}><ContactListItem firstname={user.firstname} lastname={user.lastname}/></ListItem>)}
       </List>
 
       <Button color="primary"><Link to="/login">Se Connecter</Link></Button>

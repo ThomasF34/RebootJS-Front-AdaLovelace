@@ -1,10 +1,9 @@
 import React from 'react';
 import './App.css';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
-import AppContent from './layout/AppContent';
 import { Router } from 'react-router-dom';
 import history from './history';
-import AppMenu from './layout/AppMenu';
+import AppLayout from './layout/AppLayout';
 
 
 const theme = createMuiTheme({
@@ -24,8 +23,7 @@ function App() {
   return (
     <Router history={history}>
       <ThemeProvider theme={theme}>
-        <AppMenu />
-        <AppContent />
+        <AppLayout />
       </ThemeProvider>
     </Router>
 
