@@ -1,15 +1,20 @@
 import { List } from '@material-ui/core';
 import React from 'react';
 import { getConversations } from '../../api/methods';
+import { User } from '../../users/types';
 import { IConversation } from '../types';
 import ConversationListItem from './ConversationListItem';
+
+interface ConversationListProps {
+  users: User[];
+}
 
 interface ConversationListState {
   conversations: IConversation[];
 }
 
-class ConversationList extends React.Component<{}, ConversationListState>{
-  constructor(props: {}){
+class ConversationList extends React.Component<ConversationListProps, ConversationListState>{
+  constructor(props: ConversationListProps){
     super(props);
     this.state = {
       conversations: []
@@ -25,7 +30,7 @@ class ConversationList extends React.Component<{}, ConversationListState>{
   render(){
     return (
       <List>
-        {this.state.conversations.map((conversation, index) => <ConversationListItem conversation={conversation} key={index}/>)}
+        {this.state.conversations.map((conversation, index) => <ConversationListItem users={this.props.users} conversation={conversation} key={index}/>)}
       </List>
     )
   }
