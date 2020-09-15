@@ -1,6 +1,7 @@
 import { Box, createStyles, Drawer, IconButton, Theme, withStyles } from '@material-ui/core';
 import { ArrowBackIos } from '@material-ui/icons';
 import React from 'react';
+import ConversationList from '../conversations/components/ConversationList';
 import ContactList from '../users/components/ContactList';
 import { IDrawerContent } from './types';
 
@@ -33,7 +34,7 @@ const styles = (theme: Theme) => createStyles({
 
 class AppDrawer extends React.Component<AppDrawerProps>{
   render(){
-    const content = this.props.drawerContent === 'contacts' ? <ContactList /> : <h1>To Be Implemented</h1>
+    const content = this.props.drawerContent === 'contacts' ? <ContactList /> : <ConversationList />
     return this.props.showDrawer ?
       <Drawer
         variant="persistent"
