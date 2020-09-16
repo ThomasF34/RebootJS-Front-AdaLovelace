@@ -36,8 +36,9 @@ export function register(email: string, password: string, firstname: string, las
 }
 
 export function getConversations(): Promise<IConversation[]>{
-  return Promise.resolve([
-    {
+  return new Promise((res, rej) => {
+    setTimeout(() => res(
+      [{
       _id: 'abcd',
       targets: [
         '5f5b888b74adca1d4e71bbb0',
@@ -65,8 +66,7 @@ export function getConversations(): Promise<IConversation[]>{
             '5f5b888b74adca1d4e71bbb0'
           ],
           content: 'Hey Comment tu vas ?'
-        }
-      ]
+        }]
     },
     {
       _id: 'abcde',
@@ -98,6 +98,6 @@ export function getConversations(): Promise<IConversation[]>{
           content: 'ça faisait longtemps'
         }
       ]
-    }
-  ])
+    }]
+  ), 5000)})
 }
