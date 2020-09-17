@@ -12,6 +12,7 @@ interface AppDrawerProps {
   hideDrawer: () => void;
   classes: any;
   users: User[];
+  connectedUser?: User;
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -35,7 +36,7 @@ const styles = (theme: Theme) => createStyles({
 class AppDrawer extends React.Component<AppDrawerProps>{
   render(){
     const { users } = this.props;
-    const content = this.props.drawerContent === 'contacts' ? <ContactList users={users}/> : <ConversationList users={users}/>
+    const content = this.props.drawerContent === 'contacts' ? <ContactList connectedUser={this.props.connectedUser} users={users}/> : <ConversationList users={users}/>
     return this.props.showDrawer ?
       <Drawer
         variant="persistent"
