@@ -11,11 +11,11 @@ interface ContactListProps {
 }
 
 class ContactList extends React.Component<ContactListProps>{
-  createConversation(target: string){
+  createConversation = (target: string) => {
     const {connectedUser} = this.props;
     if(connectedUser){
       const conversationId = this.generateConversationId(connectedUser._id, target);
-      return history.push(`/conversation/${conversationId}`);
+      return history.push(`/conversation/${conversationId}?target=${target}`);
     }
   }
 
