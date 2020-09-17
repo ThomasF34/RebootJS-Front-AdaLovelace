@@ -1,6 +1,7 @@
 import { createStyles, Theme, withStyles } from '@material-ui/core';
 import React, { Fragment } from 'react';
-import { getConnectedProfile, getUsers } from '../api/methods';
+import { getConnectedProfile, getConversations, getUsers } from '../api/methods';
+import { IConversation } from '../conversations/types';
 import { User } from '../users/types';
 import AppContent from './AppContent';
 import AppDrawer, { drawerWidth } from './AppDrawer';
@@ -16,6 +17,7 @@ interface AppLayoutState {
   drawerContent?: IDrawerContent;
   users: User[];
   profile?: User;
+  conversations: IConversation[];
 }
 
 const styles = (theme: Theme) => createStyles({
@@ -44,7 +46,8 @@ class AppLayout extends React.Component<AppLayoutProps, AppLayoutState>{
     super(props);
     this.state = {
       showDrawer: false,
-      users: []
+      users: [],
+      conversations: []
     }
   }
 
@@ -56,9 +59,16 @@ class AppLayout extends React.Component<AppLayoutProps, AppLayoutState>{
     this.setState({ showDrawer: false });
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     getUsers().then(fetchedUsers => { this.setState({users: fetchedUsers})})
-    getConnectedProfile().then(profile => { this.setState({ profile }); })
+    try {
+      const profile = await getConnectedProfile()
+      this.setState({ profile });
+      const conversations = await getConversations(profile)
+      this.setState({ conversations })
+    } catch(error) {
+      console.error(error);
+    }
   }
 
   render(){
@@ -68,9 +78,20 @@ class AppLayout extends React.Component<AppLayoutProps, AppLayoutState>{
     return <Fragment>
       <div className={filteredClasses}>
         <AppMenu changeDrawerContent={this.changeDrawerContent}/>
-        <AppContent connectedUser={this.state.profile} users={this.state.users}/>
+        <AppContent
+          conversations={this.state.conversations}
+          connectedUser={this.state.profile}
+          users={this.state.users}
+        />
       </div>
-      <AppDrawer connectedUser={this.state.profile} users={this.state.users} drawerContent={this.state.drawerContent} showDrawer={this.state.showDrawer} hideDrawer={this.hideDrawer}/>
+      <AppDrawer
+        conversations={this.state.conversations}
+        connectedUser={this.state.profile}
+        users={this.state.users}
+        drawerContent={this.state.drawerContent}
+        showDrawer={this.state.showDrawer}
+        hideDrawer={this.hideDrawer}
+      />
     </Fragment>
   }
 }
