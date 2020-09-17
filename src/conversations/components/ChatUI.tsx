@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { match, withRouter } from 'react-router-dom';
-import { getConversations } from '../../api/methods';
+import { getConversations, sendMessage } from '../../api/methods';
 import { User } from '../../users/types';
 import { IConversation } from '../types';
 import AttendeesList from './AttendeesList';
@@ -33,12 +33,25 @@ class ChatUI extends React.Component<ChatUIProps, ChatUIState>{
     })
   }
 
+  doSendMessage = async (message: string) => {
+    const { conversation } = this.state;
+    if(conversation) {
+      const sentMessage = await sendMessage(conversation._id, conversation.targets, message);
+      this.setState({
+        conversation: {
+          ...conversation,
+          messages: [...conversation.messages, sentMessage]
+        }
+      })
+    }
+  }
+
   render(){
     return <Fragment>
       <h1>Chat</h1>
       { this.state.conversation ? <Fragment>
           <ChatMessages messages={this.state.conversation.messages}/>
-          <ChatInput conversationId={this.state.conversation._id}/>
+          <ChatInput doSendMessage={this.doSendMessage} conversationId={this.state.conversation._id}/>
           <AttendeesList attendees={this.props.users.filter(user => this.state.conversation?.targets.includes(user._id))} />
         </Fragment> : <h1>Impossible de trouver la conversation</h1> }
       </Fragment>

@@ -35,69 +35,23 @@ export function register(email: string, password: string, firstname: string, las
     .then(resp => resp.data);
 }
 
-export function getConversations(): Promise<IConversation[]>{
-  return new Promise((res, rej) => {
-    setTimeout(() => res(
-      [{
-      _id: 'abcd',
-      targets: [
-        '5f5b888b74adca1d4e71bbb0',
-        '5f606ef451fc4331a1f26096'
-      ],
-      updatedAt: new Date(),
-      unseenMessages: 0,
-      messages: [
-        {
-          _id: '1',
-          conversationId: 'abcd',
-          createdAt: new Date(),
-          emitter: '5f5b888b74adca1d4e71bbb0',
-          targets: [
-            '5f606ef451fc4331a1f26096'
-          ],
-          content: 'Coucou'
-        },
-        {
-          _id: '2',
-          conversationId: 'abcd',
-          createdAt: new Date(),
-          emitter: '5f606ef451fc4331a1f26096',
-          targets: [
-            '5f5b888b74adca1d4e71bbb0'
-          ],
-          content: 'Hey Comment tu vas ?'
-        }]
+export async function getConversations(): Promise<IConversation[]>{
+  const resp = await axios.get(`${process.env.REACT_APP_BACKEND}/messages`, { withCredentials: true })
+  return resp.data;
+}
+
+export async function getConversation(conversationId: string): Promise<IConversation[]>{
+  const resp = await axios.get(`${process.env.REACT_APP_BACKEND}/messages/${conversationId}`, { withCredentials: true })
+  return resp.data;
+}
+
+export async function sendMessage(conversationId: string, targets: string[], content: string){
+  const resp = await axios.post(`${process.env.REACT_APP_BACKEND}/messages`,
+    {
+      conversationId, targets, content
     },
     {
-      _id: 'abcde',
-      targets: [
-        '5f5b888b74adca1d4e71bbb0',
-        '5f606ef451fc4331a1f26096'
-      ],
-      updatedAt: new Date(),
-      unseenMessages: 0,
-      messages: [
-        {
-          _id: '1',
-          conversationId: 'abcde',
-          createdAt: new Date(),
-          emitter: '5f5b888b74adca1d4e71bbb0',
-          targets: [
-            '5f606ef451fc4331a1f26096'
-          ],
-          content: 'Coucou encore'
-        },
-        {
-          _id: '2',
-          conversationId: 'abcd',
-          createdAt: new Date(),
-          emitter: '5f606ef451fc4331a1f26096',
-          targets: [
-            '5f5b888b74adca1d4e71bbb0'
-          ],
-          content: 'ça faisait longtemps'
-        }
-      ]
-    }]
-  ), 5000)})
+      withCredentials: true
+    });
+  return resp.data;
 }
