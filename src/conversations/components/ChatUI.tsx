@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { match, withRouter } from 'react-router-dom';
-import { sendMessage } from '../../api/methods';
+import { patchConversationSeen, sendMessage } from '../../api/methods';
 import { User } from '../../users/types';
 import { IConversation } from '../types';
 import AttendeesList from './AttendeesList';
@@ -26,8 +26,10 @@ class ChatUI extends React.Component<ChatUIProps, ChatUIState>{
     this.state = {};
   }
 
-  // temporaire pour avoir une conversation dans le state
-  // TODO Ne pas faire plusieurs appel. Remonter l'appel dans la hierarchie de composants
+  conversationSeen = () => {
+    if(this.state.conversation) { patchConversationSeen(this.state.conversation._id) }
+  }
+
   componentDidMount(){
     const conversations = this.props.conversations;
     const conversationId = this.props.match.params.conversationId;
@@ -65,7 +67,7 @@ class ChatUI extends React.Component<ChatUIProps, ChatUIState>{
     return <Fragment>
       <h1>Chat</h1>
       { this.state.conversation ? <Fragment>
-          <ChatMessages messages={this.state.conversation.messages}/>
+          <ChatMessages conversationSeen={this.conversationSeen} messages={this.state.conversation.messages}/>
           <ChatInput doSendMessage={this.doSendMessage} conversationId={this.state.conversation._id}/>
           <AttendeesList attendees={this.props.users.filter(user => this.state.conversation?.targets.includes(user._id))} />
         </Fragment> : <h1>Impossible de trouver la conversation</h1> }
