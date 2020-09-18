@@ -11,6 +11,7 @@ import { IconButton } from '@material-ui/core';
 import { IAppState } from '../../appReducer';
 import { connect } from 'react-redux';
 import { IProfile } from '../../profile/types';
+import { changeDrawerContent } from '../actions/changeDrawerContentAction';
 
 interface AppMenuProps {
   changeDrawerContent: (content: IDrawerContent) => void;
@@ -55,4 +56,8 @@ const mapStateToProps = ({ profile }: IAppState) => ({
   profile: profile.connectedProfile
 })
 
-export default connect(mapStateToProps)(AppMenu);
+const mapDispatchToProps = (dispatch: any) => ({
+  changeDrawerContent: (content: IDrawerContent) => dispatch(changeDrawerContent(content))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppMenu);

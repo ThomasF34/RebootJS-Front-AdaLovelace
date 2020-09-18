@@ -99,7 +99,7 @@ class AppLayout extends React.Component<AppLayoutProps, AppLayoutState>{
 
     return <Fragment>
       <div className={filteredClasses}>
-        <AppMenu changeDrawerContent={this.changeDrawerContent}/>
+        <AppMenu />
         <AppContent
           conversations={this.state.conversations}
           connectedUser={this.state.profile}
