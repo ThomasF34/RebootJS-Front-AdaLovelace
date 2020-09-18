@@ -4,6 +4,6 @@ export function changeDrawerContentCase(state: ILayoutState, action: IChangeDraw
   return {
     ...state,
     drawerContent: action.content,
-    showDrawer: true
+    showDrawer: action.showDrawer
   }
 }
