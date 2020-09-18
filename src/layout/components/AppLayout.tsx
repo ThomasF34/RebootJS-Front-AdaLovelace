@@ -1,12 +1,12 @@
 import { createStyles, Theme, withStyles } from '@material-ui/core';
 import React, { Fragment } from 'react';
-import { getConnectedProfile, getConversations, getUsers } from '../api/methods';
-import { IConversation } from '../conversations/types';
-import { User } from '../users/types';
+import { getConnectedProfile, getConversations, getUsers } from '../../api/methods';
+import { IConversation } from '../../conversations/types';
+import { User } from '../../users/types';
 import AppContent from './AppContent';
 import AppDrawer, { drawerWidth } from './AppDrawer';
 import AppMenu from './AppMenu';
-import { IDrawerContent } from './types';
+import { IDrawerContent } from '../types';
 
 interface AppLayoutProps {
   classes: any;
