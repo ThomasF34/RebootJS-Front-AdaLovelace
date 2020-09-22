@@ -10,7 +10,7 @@ interface IAttendeesListProps {
 }
 
 class AttendeesList extends React.Component<IAttendeesListProps> {
-  public render() {
+  render() {
     return (
       <List>
         {this.props.attendees.map((attendee, index) => <ListItem key={index}>
@@ -26,7 +26,7 @@ class AttendeesList extends React.Component<IAttendeesListProps> {
   }
 }
 
-const mapStateToProps = ({ profile } :IAppState, { targets } :IAttendeesListProps) => ({
+const mapStateToProps = ({ profile } :IAppState, { targets } : { targets?: string[] }) => ({
   attendees: profile.list.filter(user => targets?.includes(user._id))
 })
 
