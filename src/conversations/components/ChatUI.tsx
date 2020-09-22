@@ -68,7 +68,7 @@ class ChatUI extends React.Component<ChatUIProps, ChatUIState>{
       <h1>Chat</h1>
       { this.state.conversation ? <Fragment>
           <ChatMessages conversationSeen={this.conversationSeen} messages={this.state.conversation.messages}/>
-          <ChatInput doSendMessage={this.doSendMessage} conversationId={this.state.conversation._id}/>
+          <ChatInput doSendMessage={this.doSendMessage} conversationId={this.props.match.params.conversationId}/>
           <AttendeesList attendees={this.props.users.filter(user => this.state.conversation?.targets.includes(user._id))} />
         </Fragment> : <h1>Impossible de trouver la conversation</h1> }
       </Fragment>

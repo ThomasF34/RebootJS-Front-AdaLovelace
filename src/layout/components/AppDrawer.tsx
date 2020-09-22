@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { IAppState } from '../../appReducer';
 import ConversationList from '../../conversations/components/ConversationList';
 import { IConversation } from '../../conversations/types';
+import { makeFetchUsers } from '../../profile/actions/makeFetchUsers';
 import ContactList from '../../users/components/ContactList';
 import { User } from '../../users/types';
 import { changeDrawerContent } from '../actions/changeDrawerContentAction';
