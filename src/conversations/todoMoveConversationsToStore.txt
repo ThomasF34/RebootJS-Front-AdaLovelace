@@ -1,0 +1,31 @@
+1. Faire une action qui Fetch les conversations puis dispatch une autre action qui va stocker les informations dans le store
+  Actions:
+    - Fetch (une pré-action 'makeFetch....')
+    - Enregistre dans le store
+    Types:
+      - Type pour l'action
+      - Créer ou modifier le type contenant toutes mes actions possible POUR LE REDUCER DONNE;
+
+  Reducer:
+    - 1 nouveau reducer pour les conversations (ajouter ce reducer à l'appReducer)
+    - avec un cas dans le switch
+    Types:
+      - Créer ou modifier le type decrivant la sous-partie du store dans laquelle je me trouve;
+      - Créer ou modifier la fonction renvoyant la valeur par défaut de la sous-partie du store;
+
+  Case:
+    - Un cas qui enregistre les conversations dans le store
+
+2. Mettre à jour les composants pour utiliser les actions
+  Composant:
+    - Connecter et Nettoyer les composants au store
+      - Connecter:
+        - ChatUI
+        - ConversationList
+      - Nettoyer:
+        - AppContent
+        - AppDrawer
+    Types:
+      - Retire des states/props les usages inutiles de ce que j'ai nouvellement en store;
+
+3. Mettre a jour le polling pour qu'il utilise un dispatch (on laisse le polling dans componentDidMount)
