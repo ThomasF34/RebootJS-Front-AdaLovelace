@@ -41,6 +41,7 @@ class ContactList extends React.Component<ContactListProps>{
 }
 
 const mapStateToProps = ({profile}: IAppState) => ({
-  users: profile.list
+  users: profile.list,
+  connectedUser: profile.connectedProfile
 })
 export default connect(mapStateToProps)(ContactList);
