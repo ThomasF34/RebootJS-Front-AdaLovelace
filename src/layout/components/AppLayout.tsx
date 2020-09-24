@@ -7,12 +7,14 @@ import { IAppState } from '../../appReducer';
 import { connect } from 'react-redux';
 import { makeFetchUsers } from '../../profile/actions/makeFetchUsers';
 import { makeFetchConversation } from '../../conversations/actions/makeFetchConversations';
+import { makeStartSocket } from '../../socket/actions/makeStartSocket';
 
 interface AppLayoutProps {
   classes: any;
   showDrawer: boolean;
   makeFetchUser: () => void;
   makeFetchConversation: () => void;
+  makeStartSocket: () => void;
 }
 
 interface AppLayoutState {
@@ -49,10 +51,12 @@ class AppLayout extends React.Component<AppLayoutProps, AppLayoutState>{
   componentDidMount(){
     this.props.makeFetchUser();
     this.props.makeFetchConversation();
+    this.props.makeStartSocket();
 
     this.setState({ polling: setInterval(() => {
       this.props.makeFetchConversation();
     }, 3000)})
+    
   }
 
   componentWillUnmount(){
@@ -80,7 +84,8 @@ const mapStateToProps = ({ layout } : IAppState) => ({
 
 const mapDispatchToProps = (dispatch: any) => ({
   makeFetchUser: () => dispatch(makeFetchUsers()),
-  makeFetchConversation: () => dispatch(makeFetchConversation())
+  makeFetchConversation: () => dispatch(makeFetchConversation()),
+  makeStartSocket: () => dispatch(makeStartSocket())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(AppLayout));
