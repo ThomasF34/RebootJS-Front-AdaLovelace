@@ -10,8 +10,12 @@ export function makeInitApp() {
     // pas de user stocké
     if(getState().profile.connectedProfile === undefined){
       // regarder s'il y a un user connecté
-      const profile = await getConnectedProfile();
-      if(profile) { dispatch(updateConnectedProfile(profile))}
+      try {
+        const profile = await getConnectedProfile();
+        dispatch(updateConnectedProfile(profile));
+      } catch(err){
+        console.log('No user connected, please log in');
+      }
     }
 
     // Si j'avais un user avant l'action ou si je viens d'update l'user connecté

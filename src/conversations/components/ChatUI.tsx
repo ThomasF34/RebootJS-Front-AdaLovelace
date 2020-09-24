@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { match, withRouter } from 'react-router-dom';
 import { patchConversationSeen, sendMessage } from '../../api/methods';
 import { IConversation } from '../types';
@@ -64,14 +64,40 @@ class ChatUI extends React.Component<ChatUIProps, ChatUIState>{
   }
 
   render(){
-    return <Fragment>
-      <h1>Chat</h1>
-      { this.state.conversation ? <Fragment>
-          <ChatMessages conversationSeen={this.conversationSeen} messages={this.state.conversation.messages}/>
-          <ChatInput doSendMessage={this.doSendMessage} conversationId={this.props.match.params.conversationId}/>
-          <AttendeesList targets={this.state.conversation?.targets} />
-        </Fragment> : <h1>Impossible de trouver la conversation</h1> }
-      </Fragment>
+    if(!this.state.conversation){
+      return <h1>Impossible de trouver la conversation</h1>
+    } else {
+      return <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          height: 'calc(100% - 2rem)',
+          padding: '1rem',
+          boxSizing: 'border-box',
+          justifyContent: 'strech',
+        }} >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              height: '100%',
+              padding: '1rem',
+              boxSizing: 'border-box',
+              flexGrow: 1,
+          }}>
+            <div style={{ flexGrow: 1, overflow: 'auto' }}>
+              <ChatMessages conversationSeen={this.conversationSeen} messages={this.state.conversation.messages}/>
+            </div>
+            <div style={{ flexGrow: 0, height: '60px' }}>
+              <ChatInput doSendMessage={this.doSendMessage} conversationId={this.props.match.params.conversationId}/>
+            </div>
+            <div style={{ height: '100%', flexGrow: 0, width: '15%' }}>
+              <AttendeesList targets={this.state.conversation?.targets} />
+            </div>
+          </div>
+        </div>
+    }
+
   }
 }
 
