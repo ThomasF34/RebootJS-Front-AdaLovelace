@@ -114,7 +114,7 @@ export async function getConversation(conversationId: string): Promise<IConversa
   return resp.data;
 }
 
-export async function sendMessage(conversationId: string, targets: string[], content: string){
+export async function sendMessage(conversationId: string, targets: string[], content: string): Promise<IConversationMessage>{
   const resp = await axios.post(`${process.env.REACT_APP_BACKEND}/messages`,
     {
       conversationId, targets, content
