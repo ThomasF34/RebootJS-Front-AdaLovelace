@@ -5,21 +5,21 @@ import { IConversation, IConversationMessage } from "../conversations/types";
 
 // fetch users via the server
 export function getUsers(): Promise<User[]> {
-  return axios.get(`${process.env.REACT_APP_BACKEND}/profile`, { withCredentials: true })
+  return axios.get(`/api/profile`, { withCredentials: true })
     .then(resp => {
       return resp.data
     })
 }
 
 export function getConnectedProfile(): Promise<User> {
-  return axios.get( `${process.env.REACT_APP_BACKEND}/profile/me`, { withCredentials: true }
+  return axios.get( `/api/profile/me`, { withCredentials: true }
   ).then(resp => resp.data)
 }
 
 export function login(email: string, password: string): Promise<IProfile>{
   return axios
     .post(
-      `${process.env.REACT_APP_BACKEND}/login`,
+      `/api/login`,
       {
         username: email,
         password: password
@@ -31,13 +31,13 @@ export function login(email: string, password: string): Promise<IProfile>{
 }
 
 export function register(email: string, password: string, firstname: string, lastname: string) : Promise<IProfile>{
-  return axios.post(`${process.env.REACT_APP_BACKEND}/profile`, { email, password, firstname, lastname })
+  return axios.post(`/api/profile`, { email, password, firstname, lastname })
     .then(resp => resp.data);
 }
 
 export async function getConversations(connectedUser: User): Promise<IConversation[]>{
   //Fetch des messages à l'api
-  const resp = await axios.get(`${process.env.REACT_APP_BACKEND}/messages`, { withCredentials: true })
+  const resp = await axios.get(`/api/messages`, { withCredentials: true })
   const messages: IConversationMessage[] = resp.data;
 
   //Traitement sur les messages : messages => conversations
@@ -110,12 +110,12 @@ export async function getConversations(connectedUser: User): Promise<IConversati
 }
 
 export async function getConversation(conversationId: string): Promise<IConversation[]>{
-  const resp = await axios.get(`${process.env.REACT_APP_BACKEND}/messages/${conversationId}`, { withCredentials: true })
+  const resp = await axios.get(`/api/messages/${conversationId}`, { withCredentials: true })
   return resp.data;
 }
 
 export async function sendMessage(conversationId: string, targets: string[], content: string): Promise<IConversationMessage>{
-  const resp = await axios.post(`${process.env.REACT_APP_BACKEND}/messages`,
+  const resp = await axios.post(`/api/messages`,
     {
       conversationId, targets, content
     },
@@ -127,7 +127,7 @@ export async function sendMessage(conversationId: string, targets: string[], con
 
 export async function patchConversationSeen(conversationId: string): Promise<IProfile>{
   const resp = await axios.patch(
-    `${process.env.REACT_APP_BACKEND}/profile/conversation-seen/${conversationId}`,
+    `/api/profile/conversation-seen/${conversationId}`,
     {},
     { withCredentials: true }
   );
